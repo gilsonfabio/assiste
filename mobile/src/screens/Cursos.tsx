@@ -50,13 +50,11 @@ export default function Cursos(){
     };
 
     return (
-        <View className="flex-1 bg-[#16568A]">
-            <View className='w-full h-2/3'>
-                <ImageBackground className='w-full h-full opacity-50'
-                    source={require('../../assets/login.png')}  
-                />
-            </View>    
-            <Text>CURSOS</Text>
+        <View className="flex-1 bg-[#16568A]">   
+            <View className='flex items-center w-full h-auto justify-center' >
+                <Text className=' text-white text-2xl font-bold mt-20'>CURSOS</Text>
+            </View>          
+            
             <FlatList
                 data={oportunidades}
                 className=''

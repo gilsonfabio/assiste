@@ -9,6 +9,8 @@ import Solicitacoes from '../screens/Solicitacoes';
 import NewSolicitacao from '../screens/NewSolicitacao';
 import Cursos from '../screens/Cursos';
 import Empregos from '../screens/Empregos';
+import Denuncias from '../screens/Denuncias';
+import NewDenuncia from '../screens/NewDenuncia';
 
 type navigationProps = {
     Welcome: undefined;
@@ -20,6 +22,8 @@ type navigationProps = {
     NewSolicitacao: undefined;
     Cursos: undefined;
     Empregos: undefined;
+    Denuncias: undefined;
+    NewDenuncia: undefined;
 }
 
 const Stack = createNativeStackNavigator<navigationProps>();
@@ -35,7 +39,9 @@ export default function Routes(){
             <Stack.Screen name="Solicitacoes" component={Solicitacoes} options={{headerShown:false}}/>
             <Stack.Screen name="NewSolicitacao" component={NewSolicitacao} options={{headerShown:false}}/> 
             <Stack.Screen name="Cursos" component={Cursos} options={{headerShown:false}}/>
-            <Stack.Screen name="Empregos" component={Empregos} options={{headerShown:false}}/>                       
+            <Stack.Screen name="Empregos" component={Empregos} options={{headerShown:false}}/>     
+            <Stack.Screen name="Denuncias" component={Denuncias} options={{headerShown:false}}/>      
+            <Stack.Screen name="NewDenuncia" component={NewDenuncia} options={{headerShown:false}}/>                      
         </Stack.Navigator>
     )
 }

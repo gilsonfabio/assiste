@@ -22,11 +22,11 @@ const ListSolicitacao = ({ data }:any) => {
       <View>
         <View className='flex bg-sky-600 w-96 h-auto rounded mt-2 ml-1'>          
           <View className='flex flex-row justify-between w-full h-auto '>
-             <Text className='ml-2 text-white font-bold '>{data.tipDescricao}</Text>
-             <Text className='mr-2 text-white font-bold '>{data.solAbertura}</Text>
+             <Text className='mt-2 ml-2 text-white font-bold '>{data.tipDescricao}</Text>
+             <Text className='mt-2 mr-2 text-white font-bold '>{data.solAbertura}</Text>
           </View>  
           <View>
-            <Text className='text-white font-bold ml-2'>{data.solTitulo}</Text>
+            <Text className='mt-2 text-white font-bold ml-2'>{data.solTitulo}</Text>
           </View>
         </View>        
       </View>  

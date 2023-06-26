@@ -87,7 +87,7 @@ export default function Denuncias(){
                 />
             </View>    
             <View className='flex absolute w-full items-center justify-center mt-20'>
-                <Text className='text-3xl font-bold text-white '>Solicitações</Text>
+                <Text className='text-3xl font-bold text-white '>Denuncias</Text>
                 <TouchableOpacity onPress={handleNewDenuncia} className='flex justify-center items-center mt-6 mr-4 ml-4 p-3 bg-green-600 rounded-md '>
                     <Text className='font-bold text-white'>NOVA DENUNCIA</Text>
                 </TouchableOpacity>
@@ -102,3 +102,4 @@ export default function Denuncias(){
         </View>
     )
 }
+

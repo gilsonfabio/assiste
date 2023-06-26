@@ -8,41 +8,33 @@ import axios from 'axios';
 
 import api from '../Services/api';
 import { AuthContext } from '../contexts/auth';
-import SelectEspecializacao from '../components/SelectEspecializacao';
-import SelectTipo from '../components/SelectTipo';
+import SelectSubTipo from '../components/SelectSubTipo';
+import SelectTipDenuncia from '../components/SelectTipDenuncia';
 
 type Nav = {
     navigate: (value: string) => void;
 }
 
 type tiposProps = {
-    tipId: number;
-    tipDescricao: string;
+    tdeId: number;
+    tdeDescricao: string;
 }
 
-type especializacoesProps = {
-    espId: number;
-    espDescricao: string;
+type subtiposProps = {
+    stdId: number;
+    stdDescricao: string;
 }
 
 export default function NewDenuncia(){
     const [tipo, setTipo] = useState('');
-    const [especializacao, setEspecializacao] = useState('');
-    const [titulo, setTitulo] = useState('');
-    const [texto, setTexto] = useState('');    
+    const [subtipo, setSubTipo] = useState('');
+    const [texto, setTexto] = useState('');
+    const [nome, setNome] = useState('');
+    const [fone, setFone] = useState('');    
     
     const [tipos, setTipos] = useState<Array<tiposProps>>([]);
-    const [especializacoes, setEspecializacoes] = useState<Array<especializacoesProps>>([]);
+    const [subtipos, setSubTipos] = useState<Array<subtiposProps>>([]);
     
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [cnfPassword, setCnfPassword] = useState('');
-    const [celular, setCelular] = useState('');
-    const [autContato, setAutContato] = useState('');
-    const { signIn }: any = useContext(AuthContext);
-    const [news, setNews] = useState([]);
-
     const idServ = 2;
     const idCon = 1;
     const idCan = 1;
@@ -57,13 +49,13 @@ export default function NewDenuncia(){
     async function handleCadastra(){              
         try {
             api.post('newDenuncia', {
-                solIdServ: idServ, 
-                solTipo: tipo, 
-                solContato: idCon, 
-                solTitulo: titulo, 
-                solDescricao: texto, 
-                solCandidato: idCan, 
-                solEspecializacao: especializacao
+                denTipo: tipo, 
+                denSubId: subtipo, 
+                denDescricao: texto, 
+                denCandidato: idCan, 
+                denNome: nome, 
+                denConId: idCon, 
+                denFonContato: fone,
             }).then(() => {
                 alert('Denuncia cadastrada com sucesso!')
             }).catch(() => {
@@ -79,20 +71,20 @@ export default function NewDenuncia(){
         
         api({
             method: 'get',    
-            url: `tipos`,                 
+            url: `tipdenuncias`,                 
         }).then(function(response) {
             setTipos(response.data)
         }).catch(function(error) {
-            alert(`Falha no acesso dos Tipos de Solicitações! Tente novamente.`);
+            alert(`Falha no acesso dos Tipos de Denuncias! Tente novamente.`);
         })
 
         api({
             method: 'get',    
-            url: `especializacoes`,                 
+            url: `subTipDenuncias`,                 
         }).then(function(response) {
-            setEspecializacoes(response.data)
+            setSubTipos(response.data)
         }).catch(function(error) {
-            alert(`Falha no acesso das Especializações de Solicitações! Tente novamente.`);
+            alert(`Falha no acesso dos SubTipos de Denuncias! Tente novamente.`);
         })
     
     }, []);
@@ -100,30 +92,21 @@ export default function NewDenuncia(){
     return (
         <View className="flex-1 bg-[#16568A]">
             <View className='flex items-center mt-10'>
-                <Text className='mt-2 text-lg font-bold text-white'>CADASTRE SOLICITAÇÃO</Text>
+                <Text className='mt-2 text-lg font-bold text-white'>CADASTRE SUA DENUNCIA</Text>
             </View>
-            <Text className='text-white text-[10px] ml-4 mt-3 '>Tipo de solicitação:</Text>
+            <Text className='text-white text-[10px] ml-4 mt-3 '>Tipo de Denuncia:</Text>
             <View className='mt-1 mr-4 ml-4 p-2 bg-slate-100 rounded-md'>
-                <SelectTipo options={tipos} setTipo={setTipo} texto={'Selecione a opção'}  /> 
+                <SelectTipDenuncia options={tipos} setTipo={setTipo} texto={'Selecione a opção'}  /> 
             </View> 
-            <Text className='text-white text-[10px] ml-4 mt-3 '>Especialização:</Text>
+            <Text className='text-white text-[10px] ml-4 mt-3 '>SubTipo Denuncia:</Text>
             <View className='mt-1 mr-4 ml-4 p-2 bg-slate-100 rounded-md'>
-                <SelectEspecializacao options={especializacoes} setEspecializacao={setEspecializacao} texto={'Selecione a especialização'}  /> 
+                <SelectSubTipo options={subtipos} setSubTipo={setSubTipo} texto={'Selecione SubTipo de Denuncia'}  /> 
             </View>      
-            <Text className='text-white text-[10px] ml-4 mt-3 '>Titulo:</Text>       
-            <View className='mt-1 mr-4 ml-4 p-2 bg-slate-100 rounded-md'>
-                <TextInput 
-                    className='flex justify-center w-80 items-center text-black ' 
-                    placeholder='Informe titulo da solicitação'
-                    value={titulo}
-                    onChangeText={setTitulo}>
-                </TextInput>
-            </View>
-            <Text className='text-white text-[10px] ml-4 mt-3 '>Descrição Solicitação:</Text>
+            <Text className='text-white text-[10px] ml-4 mt-3 '>Descrição Denuncia:</Text>
             <View className='mt-1 mr-4 ml-4 p-2 bg-slate-100 rounded-md'>
                 <TextInput 
                     className='w-80 text-black'                     
-                    placeholder='Informe sua solicitação'
+                    placeholder='Informe sua Denuncia'
                     editable
                     multiline
                     numberOfLines={8}
@@ -131,9 +114,35 @@ export default function NewDenuncia(){
                     value={texto}
                     onChangeText={setTexto}>
                 </TextInput>
+            </View> 
+            <Text className='text-white text-[10px] ml-4 mt-3 '>Nome:</Text>
+            <View className='mt-1 mr-4 ml-4 p-2 bg-slate-100 rounded-md'>
+                <TextInput 
+                    className='w-80 text-black'                     
+                    placeholder='Informe seu nome'
+                    editable
+                    multiline
+                    numberOfLines={1}
+                    maxLength={50} 
+                    value={nome}
+                    onChangeText={setNome}>
+                </TextInput>
+            </View> 
+            <Text className='text-white text-[10px] ml-4 mt-3 '>Telefone:</Text>
+            <View className='mt-1 mr-4 ml-4 p-2 bg-slate-100 rounded-md'>
+                <TextInput 
+                    className='w-80 text-black'                     
+                    placeholder='Informe seu telefone'
+                    editable
+                    multiline
+                    numberOfLines={1}
+                    maxLength={50} 
+                    value={fone}
+                    onChangeText={setFone}>
+                </TextInput>
             </View>            
             <TouchableOpacity className='flex justify-center items-center mt-6 mr-4 ml-4 p-3 bg-green-600 rounded-md '>
-                <Text onPress={handleCadastra} className='font-bold text-white'>ENVIAR SOLICITAÇÃO</Text>
+                <Text onPress={handleCadastra} className='font-bold text-white'>ENVIAR DENUNCIA</Text>
             </TouchableOpacity> 
         </View>
     )
