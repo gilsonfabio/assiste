@@ -17,6 +17,7 @@ const SolicitacoesController = require('./controllers/SolicitacoesController');
 const ContatosController = require('./controllers/ContatosController');
 const OportunidadesController = require('./controllers/OportunidadesController');
 const CandidatoController = require('./controllers/CandidatoController');
+const DenunciasController = require('./controllers/DenunciasController');
 
 routes.get('/', (request, response) => {
     response.json({
@@ -61,13 +62,17 @@ routes.put('/updUsuario/:idAdm', verifyJWT, AdminController.updUsuario);
 routes.get('/services', ServicesController.index);
 
 routes.get('/tipos', TiposController.index);
-
 routes.get('/especializacoes', EspecializacoesController.index);
 
 routes.post('/signInCon', ContatosController.signIn);
 
 routes.get('/solContato/:idCon', SolicitacoesController.solContato);
 routes.post('/newSolicitacao', SolicitacoesController.newSolicitacao);
+
+routes.get('/denContato/:idCon', DenunciasController.denContato);
+routes.post('/newDenuncia', DenunciasController.newDenuncia);
+routes.get('/tipdenuncias', DenunciasController.tipDenuncias);
+routes.get('/subTipDenuncias', DenunciasController.subTipDenuncias);
 
 routes.get('/oportunidades/:tipo', OportunidadesController.oportunidades);
 routes.post('/newOportunidade', OportunidadesController.newOportunidade);
