@@ -18,6 +18,7 @@ const ContatosController = require('./controllers/ContatosController');
 const OportunidadesController = require('./controllers/OportunidadesController');
 const CandidatoController = require('./controllers/CandidatoController');
 const DenunciasController = require('./controllers/DenunciasController');
+const UtilidadesController = require('./controllers/UtilidadesController');
 
 routes.get('/', (request, response) => {
     response.json({
@@ -60,6 +61,7 @@ routes.put('/solPassword/:email', AdminController.solPassword);
 routes.put('/updUsuario/:idAdm', verifyJWT, AdminController.updUsuario);
 
 routes.get('/services', ServicesController.index);
+routes.get('/utilidades', UtilidadesController.index);
 
 routes.get('/tipos', TiposController.index);
 routes.get('/especializacoes', EspecializacoesController.index);

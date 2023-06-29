@@ -20,6 +20,8 @@ module.exports = {
         let solStatus = 'A';
         let solAbertura = new Date();
         
+        console.log(request.body);
+
         const [solId] = await connection('solicitacoes').insert({
             solIdServ, 
             solTipo, 
