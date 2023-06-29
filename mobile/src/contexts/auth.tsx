@@ -41,6 +41,7 @@ function AuthProvider({children}: any){
                 //alert(`Token de acesso: ${response.data.token}`)
 
                 navigation.navigate("Servicos")
+                
 
             }).catch(function(error) {
                 alert(`Falha no login Contato! Tente novamente. ${email}`);

@@ -9,15 +9,15 @@ import axios from 'axios';
 
 import api from '../Services/api';
 import { AuthContext } from '../contexts/auth';
-import ListService from '../components/ListService';
+import ListUtilidade from '../components/ListUtilidade';
 
 type Nav = {
     navigate: (value: string) => void;
 }
 
-export default function Servicos(){
+export default function Utilidades(){
     const navigation = useNavigation<Nav>();
-    const [services, setServices] = useState([]);
+    const [utilidades, setUtilidades] = useState([]);
     const [candidato, setCandidato] = useState([]);
     const [contato, setContato] = useState([]);
     const [dados, setDados] = useState([]);
@@ -28,22 +28,13 @@ export default function Servicos(){
         
         api({
             method: 'get',    
-            url: `services`,                 
+            url: `utilidades`,                 
         }).then(function(response) {
-            setServices(response.data)
+            setUtilidades(response.data)
         }).catch(function(error) {
-            alert(`Falha no acesso dos serviços! Tente novamente.`);
+            alert(`Falha no acesso das utilidades! Tente novamente.`);
         })
 
-        api({
-            method: 'get',    
-            url: `candidato`,                 
-        }).then(function(resp) {
-            setDados(resp.data)
-        }).catch(function(error) {
-            alert(`Falha no acesso do candidato! Tente novamente.`);
-        })
-    
     }, []);
 
     const getData = async () => {
@@ -58,7 +49,6 @@ export default function Servicos(){
         } catch (e) {
           // error reading value
         }
-        
     };
 
     return (
@@ -77,10 +67,10 @@ export default function Servicos(){
                 ))}
             </View>               
             <FlatList
-                data={services}
+                data={utilidades}
                 className=''
                 numColumns={3}
-                renderItem={({ item }) => <ListService data={item} />}
+                renderItem={({ item }) => <ListUtilidade data={item} />}
                 keyExtractor={(item) => item.srvId}
             />
         </View>

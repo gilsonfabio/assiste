@@ -4,6 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import Carousel from 'react-native-reanimated-carousel';
 import { Feather } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 import api from '../Services/api';
@@ -35,6 +36,9 @@ export default function NewDenuncia(){
     const [tipos, setTipos] = useState<Array<tiposProps>>([]);
     const [subtipos, setSubTipos] = useState<Array<subtiposProps>>([]);
     
+    const [candidato, setCandidato] = useState([]);
+    const [contato, setContato] = useState([]);
+
     const idServ = 2;
     const idCon = 1;
     const idCan = 1;
@@ -52,9 +56,9 @@ export default function NewDenuncia(){
                 denTipo: tipo, 
                 denSubId: subtipo, 
                 denDescricao: texto, 
-                denCandidato: idCan, 
+                denCandidato: candidato, 
                 denNome: nome, 
-                denConId: idCon, 
+                denConId: contato, 
                 denFonContato: fone,
             }).then(() => {
                 alert('Denuncia cadastrada com sucesso!')
@@ -88,6 +92,20 @@ export default function NewDenuncia(){
         })
     
     }, []);
+
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
+            const jsonCont = await AsyncStorage.getItem('auth.conId');
+            if (jsonValue != null) { 
+                setCandidato(JSON.parse(jsonValue))
+                setContato(JSON.parse(jsonCont)) 
+            }else { alert('erro');
+            }
+        } catch (e) {
+          // error reading value
+        }
+    };
     
     return (
         <View className="flex-1 bg-[#16568A]">

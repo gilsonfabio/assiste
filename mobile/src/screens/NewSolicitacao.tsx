@@ -4,6 +4,7 @@ import * as Animatable from 'react-native-animatable';
 import Carousel from 'react-native-reanimated-carousel';
 import { Feather } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 import api from '../Services/api';
@@ -31,6 +32,9 @@ export default function NewSolicitacao(){
     const [titulo, setTitulo] = useState('');
     const [texto, setTexto] = useState('');    
     
+    const [candidato, setCandidato] = useState([]);
+    const [contato, setContato] = useState([]);
+
     const [tipos, setTipos] = useState<Array<tiposProps>>([]);
     const [especializacoes, setEspecializacoes] = useState<Array<especializacoesProps>>([]);
     
@@ -59,10 +63,10 @@ export default function NewSolicitacao(){
             api.post('newSolicitacao', {
                 solIdServ: idServ, 
                 solTipo: tipo, 
-                solContato: idCon, 
+                solContato: contato, 
                 solTitulo: titulo, 
                 solDescricao: texto, 
-                solCandidato: idCan, 
+                solCandidato: candidato, 
                 solEspecializacao: especializacao
             }).then(() => {
                 alert('Solicitação cadastrada com sucesso!')
@@ -76,7 +80,9 @@ export default function NewSolicitacao(){
     }
 
     useEffect(() => {
-        
+          
+        getData();
+           
         api({
             method: 'get',    
             url: `tipos`,                 
@@ -97,6 +103,20 @@ export default function NewSolicitacao(){
     
     }, []);
     
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
+            const jsonCont = await AsyncStorage.getItem('auth.conId');
+            if (jsonValue != null) { 
+                setCandidato(JSON.parse(jsonValue))
+                setContato(JSON.parse(jsonCont)) 
+            }else { alert('erro');
+            }
+        } catch (e) {
+          // error reading value
+        }
+    };
+
     return (
         <View className="flex-1 bg-[#16568A]">
             <View className='flex items-center mt-10'>

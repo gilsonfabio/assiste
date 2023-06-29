@@ -83,7 +83,7 @@ export default function Denuncias(){
         <View className="flex-1 bg-[#16568A]">
             <View className='w-full h-1/3'>
                 <ImageBackground className='w-full h-full opacity-50'
-                    source={require('../../assets/login.png')}  
+                    source={require('../../assets/services.png')}  
                 />
             </View>    
             <View className='flex absolute w-full items-center justify-center mt-20'>
