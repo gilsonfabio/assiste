@@ -44,7 +44,7 @@ const ListUtilidade = ({ data }:any) => {
     <TouchableOpacity onPress={handleDetalhes}>
       <View>
         <View className='flex items-center bg-sky-600 w-28 h-28 rounded mt-2 ml-4'>
-          <Image source={images[data.utlId].path} resizeMode="contain" className='mt-2 w-14 h-14' />
+          <Image source={{uri: `https://i.ibb.co/${data.utlImage}` }} resizeMode="contain" className='mt-2 w-14 h-14' />
           <Text className='mt-3 text-white font-bold'>{data.utlDescricao}</Text>
         </View>       
       </View>  

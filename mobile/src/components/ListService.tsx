@@ -34,22 +34,11 @@ const ListService = ({ data }:any) => {
     }        
   }
   
-  const images = [
-    { id: 0, path: require('../../assets/denuncia.png') },
-    { id: 1, path: require('../../assets/denuncia.png') },
-    { id: 2, path: require('../../assets/solicitacao.png') },
-    { id: 3, path: require('../../assets/emprego.png') },
-    { id: 4, path: require('../../assets/curso.png') },
-    { id: 5, path: require('../../assets/agenda.png') },
-    { id: 6, path: require('../../assets/trabalho.png') },
-    { id: 7, path: require('../../assets/utilidade.png') },
-  ];
-
   return (
     <TouchableOpacity onPress={handleDetalhes}>
       <View>
         <View className='flex items-center bg-sky-600 w-28 h-28 rounded mt-2 ml-4'>
-          <Image source={images[data.srvId].path} resizeMode="contain" className='mt-2 w-14 h-14' />
+          <Image source={{uri: `https://i.ibb.co/${data.srvImage}`}} resizeMode="contain" className='mt-2 w-14 h-14' />
           <Text className='mt-3 text-white font-bold'>{data.srvDescricao}</Text>
         </View>        
       </View>  
