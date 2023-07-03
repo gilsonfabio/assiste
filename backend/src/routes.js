@@ -99,6 +99,8 @@ routes.post('/newGrupo', verifyJWT, GruposController.create);
 routes.put('/updGrupo/:idGrp', verifyJWT, GruposController.updGrupo);
 
 routes.get('/news', NewsController.index);
+
 routes.get('/candidato', CandidatoController.index);
+routes.get('/searchCandidato/:candidato', CandidatoController.searchCandidato);
 
 module.exports = routes;
