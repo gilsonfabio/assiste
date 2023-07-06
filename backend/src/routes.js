@@ -19,6 +19,8 @@ const OportunidadesController = require('./controllers/OportunidadesController')
 const CandidatoController = require('./controllers/CandidatoController');
 const DenunciasController = require('./controllers/DenunciasController');
 const UtilidadesController = require('./controllers/UtilidadesController');
+const ImportsController = require('./controllers/ImportsController');
+const CitiesController = require('./controllers/CitiesController');
 
 routes.get('/', (request, response) => {
     response.json({
@@ -102,5 +104,10 @@ routes.get('/news', NewsController.index);
 
 routes.get('/candidato', CandidatoController.index);
 routes.get('/searchCandidato/:candidato', CandidatoController.searchCandidato);
+
+routes.post('/geraUfs', ImportsController.gerUfs);
+routes.post('/geraCities', ImportsController.importCities);
+
+routes.post('/cities', CitiesController.index);
 
 module.exports = routes;
