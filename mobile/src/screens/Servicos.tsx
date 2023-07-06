@@ -71,8 +71,8 @@ export default function Servicos(){
                     source={require('../../assets/logo.png')}  
                 />
                 {dados.map((row, idx) => (
-                    <View key={idx} className='flex items-center justify-center absolute '>
-                        <Text className='mt-96 ml-5 text-3xl text-white font-bold'>{row.canFrase}</Text>
+                    <View key={idx} className='flex items-center justify-end absolute w-full h-full'>
+                        <Text className='mb-8 ml-5 text-3xl text-white font-bold'>{row.canFrase}</Text>
                     </View>    
                 ))}
             </View>               
