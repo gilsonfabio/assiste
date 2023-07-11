@@ -14,6 +14,7 @@ import NewDenuncia from '../screens/NewDenuncia';
 import Utilidades from '../screens/Utilidades';
 import Clima from '../screens/Clima';
 import NossoTrabalho from '../screens/NossoTrabalho';
+import Previsao from '../screens/Previsao';
 
 type navigationProps = {
     Welcome: undefined;
@@ -30,6 +31,7 @@ type navigationProps = {
     Utilidades: undefined;
     Clima: undefined;
     NossoTrabalho: undefined;
+    Previsao: {city: string | undefined, lat: string | undefined, lon: string | undefined}
 }
 
 const Stack = createNativeStackNavigator<navigationProps>();
@@ -51,6 +53,7 @@ export default function Routes(){
             <Stack.Screen name="Utilidades" component={Utilidades} options={{headerShown:false}}/>
             <Stack.Screen name="Clima" component={Clima} options={{headerShown:false}}/>  
             <Stack.Screen name="NossoTrabalho" component={NossoTrabalho} options={{headerShown:false}}/>                      
+            <Stack.Screen name="Previsao" component={Previsao} options={{headerShown:false}}/>
         </Stack.Navigator>
     )
 }
