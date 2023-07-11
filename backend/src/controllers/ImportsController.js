@@ -40,7 +40,11 @@ module.exports = {
         }
     }, 
 
-    async importCities (request, response) {        
+    async importCities (request, response) {  
+        
+        let idUf = request.params.uf;
+        console.log(idUf);
+
         fs.readFile("./src/database/json/municipios.json", function(err, data) {
       
             if (err) throw err;
@@ -57,16 +61,17 @@ module.exports = {
                 let siafi = cities[i].siafi_id;
                 let ddd = cities[i].ddd;
                 let fuso = cities[i].fuso_horario;
-
-                console.log(nome)
-
-                salvaCity(codigo, nome, latitude, longitude, capital, uf, siafi, ddd, fuso)
                 
+                if (uf == idUf) {
+                    salvaCity(codigo, nome, latitude, longitude, capital, uf, siafi, ddd, fuso)
+                    console.log(nome)
+                }
+
                 i++  
-            }
-            
-            return response.status(200).send({status: 'Importação de Cidades com Sucesso!'});
+            }           
         });
+
+        return response.status(200).send({status: 'Importação de Cidades com Sucesso!'});
 
         async function salvaCity(codigo, nome, latitude, longitude, capital, uf, siafi, ddd, fuso) {
             await connection('cities').insert({
@@ -81,6 +86,6 @@ module.exports = {
                 citFuso: fuso                       
             });
         }
-    }, 
-       
+    },
+
 };

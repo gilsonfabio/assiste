@@ -106,8 +106,8 @@ routes.get('/candidato', CandidatoController.index);
 routes.get('/searchCandidato/:candidato', CandidatoController.searchCandidato);
 
 routes.post('/geraUfs', ImportsController.gerUfs);
-routes.post('/geraCities', ImportsController.importCities);
+routes.post('/geraCities/:uf', ImportsController.importCities);
 
-routes.post('/cities', CitiesController.index);
+routes.get('/cities/:city', CitiesController.index);
 
 module.exports = routes;
