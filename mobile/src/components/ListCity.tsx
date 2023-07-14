@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Image, Text, Dimensions} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Nav = {
-    navigate: (value: string) => void;
+    navigate: (
+      value: string, 
+      city: any
+    ) => void;
 }
 
 type citiesProps = {
@@ -29,9 +32,10 @@ type paramsProps = {
 
 const width = Dimensions.get('window').width - 5; 
 
-const ListCity = ({ data }:any) => {
+const ListCity = ({ data }:any ) => {
   const navigation = useNavigation<Nav>();
-
+  const route = useRoute();
+  
   function handleDetalhes(){
     setTimeout(() => {
       handleGetToken()
@@ -39,15 +43,11 @@ const ListCity = ({ data }:any) => {
   }
   
   function handleGetToken() {
-    navigation.navigate('Previsao', {
-      city: data.citNome, 
-      lan: data.citLatitude,
-      lon: data.citLongitude  
-    });
+    //navigation.navigate('Previsao', {city: data.citCodIbge});
   }
   
   return (
-    <TouchableOpacity onPress={handleDetalhes}>
+    <TouchableOpacity onPress={() => navigation.navigate('Previsao', {city: data.citCodIbge})}>
       <View className=''>
         <View className='flex flex-col justify-between items-center bg-sky-600 w-72 h-auto rounded mt-2 ml-1'>
           <View className='flex flex-row justify-between items-center w-full'>

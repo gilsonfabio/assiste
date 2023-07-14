@@ -13,7 +13,10 @@ import { AuthContext } from '../contexts/auth';
 import ListService from '../components/ListService';
 
 type Nav = {
-    navigate: (value: string) => void;
+    navigate: (
+      value: string, 
+      city: any
+    ) => void;
 }
 
 export default function Previsao(){
@@ -26,13 +29,22 @@ export default function Previsao(){
     const [latitude, setLatitude] = useState();
     const [longitude, setLongitude] = useState();
     const route = useRoute();
-    const {city, lat, lon} = route.params as any;
+    const {city} = route.params as any;
 
     useEffect(() => {
-        
         api({
             method: 'get',    
-            url: `https://api.meteum.ai/v1/forecast?lat=${lat}lon=${lon}`,
+            url: `citIbge/${city}`,                 
+        }).then(function(response) {
+            setLatitude(response.data[0].citLatitude)
+            setLongitude(response.data[0].citLongitude)
+        }).catch(function(error) {
+            alert(`Falha no acesso a base de cidades!`);
+        })
+
+        api({
+            method: 'get',    
+            url: `https://api.meteum.ai/v1/forecast?lat=${latitude}lon=${longitude}`,
             headers: {
                 "X-Meteum-API-Key" : '3d63f76e-4acb-4683-b0d2-a8f54de6ba16'
             },      

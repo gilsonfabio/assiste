@@ -31,7 +31,7 @@ type navigationProps = {
     Utilidades: undefined;
     Clima: undefined;
     NossoTrabalho: undefined;
-    Previsao: {city: string | undefined, lat: string | undefined, lon: string | undefined}
+    Previsao: {city: any | undefined}
 }
 
 const Stack = createNativeStackNavigator<navigationProps>();
