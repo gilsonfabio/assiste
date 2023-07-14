@@ -39,6 +39,7 @@ module.exports = {
     },
 
     async index (request, response) {
+        let id = request.params.idCan;
         const contatos = await connection('contatos')
         .where('conCanditado', id)
         .orderBy('conNomCompleto')
@@ -47,5 +48,134 @@ module.exports = {
         return response.json(contatos);
     }, 
 
+    async create(request, response) {
+        const {
+            conCandidato, 
+            conNomCompleto, 
+            conGenero, 
+            conCpf, 
+            conIdentidade, 
+            conOrgEmissor, 
+            conTitEleitor, 
+            conTrabalho, 
+            conCargo, 
+            conCelular, 
+            conEmail, 
+            conEndereco, 
+            conNumero, 
+            conBairro, 
+            conCidade, 
+            conUf, 
+            conComplemento, 
+            conNascimento, 
+            conPai, 
+            conMae, 
+            conEstCivil, 
+            conConjuge, 
+            conNasConjuge, 
+            conInfluencia, 
+            conLatitude, 
+            conLongitude, 
+            conPassword } = request.body;
+        var status = 'A'; 
+        var senha = crypto.createHash('md5').update(admPassword).digest('hex');
+        const [conId] = await connection('contatos').insert({
+            conCandidato, 
+            conNomCompleto, 
+            conGenero, 
+            conCpf, 
+            conIdentidade, 
+            conOrgEmissor, 
+            conTitEleitor, 
+            conTrabalho, 
+            conCargo, 
+            conCelular, 
+            conEmail, 
+            conEndereco, 
+            conNumero, 
+            conBairro, 
+            conCidade, 
+            conUf, 
+            conComplemento, 
+            conNascimento, 
+            conPai, 
+            conMae, 
+            conEstCivil, 
+            conConjuge, 
+            conNasConjuge, 
+            conInfluencia, 
+            conLatitude, 
+            conLongitude, 
+            conPassword, 
+            conStatus: status
+        });
+           
+        return response.json({admId});
+    },
+
+    async updContato(request, response) {
+        let id = request.params.idCon;         
+        const {
+            conCandidato, 
+            conNomCompleto, 
+            conGenero, 
+            conCpf, 
+            conIdentidade, 
+            conOrgEmissor, 
+            conTitEleitor, 
+            conTrabalho, 
+            conCargo, 
+            conCelular, 
+            conEmail, 
+            conEndereco, 
+            conNumero, 
+            conBairro, 
+            conCidade, 
+            conUf, 
+            conComplemento, 
+            conNascimento, 
+            conPai, 
+            conMae, 
+            conEstCivil, 
+            conConjuge, 
+            conNasConjuge, 
+            conInfluencia, 
+            conLatitude, 
+            conLongitude, 
+            conPassword} = request.body;
+ 
+        await connection('contatos').where('conId', id)   
+        .update({
+            conCandidato, 
+            conNomCompleto, 
+            conGenero, 
+            conCpf, 
+            conIdentidade, 
+            conOrgEmissor, 
+            conTitEleitor, 
+            conTrabalho, 
+            conCargo, 
+            conCelular, 
+            conEmail, 
+            conEndereco, 
+            conNumero, 
+            conBairro, 
+            conCidade, 
+            conUf, 
+            conComplemento, 
+            conNascimento, 
+            conPai, 
+            conMae, 
+            conEstCivil, 
+            conConjuge, 
+            conNasConjuge, 
+            conInfluencia, 
+            conLatitude, 
+            conLongitude, 
+            conPassword 
+        });
+           
+        return response.status(204).send();
+    },
     
 };
