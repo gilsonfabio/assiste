@@ -7,46 +7,71 @@ type Nav = {
     navigate: (value: string) => void;
 }
 
+type storageProps = {
+	"dados": {
+		"usrId": number;
+		"usrNome": string;
+		"usrEmail": string;
+		"usrCandidato": string;
+	},
+	"token": string;
+	"refreshToken": string;
+}
+
 export const AuthContext = createContext({})
 
 function AuthProvider({children}: any){
     const [user, setUser] = useState({});
     const navigation = useNavigation<Nav>();
+    const [usuario, setUsuario] = useState(null);
+    const [candidato, setCandidato] = useState(null);
 
-    function signIn(email: string, password:string) {
+    async function signIn(email: string, password:string) {
         if(email !== '' && password !== ''){            
-            api({
+            await api({
                 method: 'post',    
                 url: `signInCon`,
                 data: {
                   email,
                   password
                 },       
-            }).then(function(response) {
-                AsyncStorage.setItem('auth.token', response.data.token)
-                AsyncStorage.setItem('auth.refreshToken', response.data.refreshToken)
-                AsyncStorage.setItem('auth.conNomCompleto', response.data.user.conNomCompleto)
-                AsyncStorage.setItem('auth.conEmail', response.data.user.conEmail)
+            }).then(function(response) { 
+                console.log(response.data.dados) 
+                const { usrCandidado, usrEmail, usrId, usrNome } = response.data.dados;    
 
-                const jsonConId = JSON.stringify(response.data.user.conId)
-                AsyncStorage.setItem('auth.conId', jsonConId)
+                console.log(usrCandidado);
+                console.log(usrEmail);
+                console.log(usrId);
+                console.log(usrNome);    
 
-                const jsonCanId = JSON.stringify(response.data.user.conCandidato)
-                AsyncStorage.setItem('auth.conCandidato', jsonCanId)
-                
-                //api.defaults.headers['x-access-token'] = `${response.data.token}`;
-        
-                //setUser(user)
+                handleSetDados(usrId, usrCandidado)
 
-                //alert(`Token de acesso: ${response.data.token}`)
-
-                navigation.navigate("Servicos")
-                
+                navigation.navigate("Servicos")           
 
             }).catch(function(error) {
+                alert(error)
                 alert(`Falha no login Contato! Tente novamente. ${email}`);
             })                   
         } 
+    }
+
+    const handleSetDados = async (usrId, usrCandidato) => {
+        if (usrId != null && usrCandidato != null) { 
+            await AsyncStorage.setItem('auth.conId', JSON.stringify(usrId))
+            await AsyncStorage.setItem('auth.conCandidato', usrCandidato)
+        }    
+        /*
+        await AsyncStorage.setItem('auth.token', response.token)
+        await AsyncStorage.setItem('auth.refreshToken', response.refreshToken)
+        await AsyncStorage.setItem('auth.conNomCompleto', response.dados.usrNome)
+        await AsyncStorage.setItem('auth.conEmail', response.dados.usrEmail)
+
+        const jsonConId = JSON.stringify(response.dados.usrId)
+        await AsyncStorage.setItem('auth.conId', jsonConId)
+
+        const jsonCanId = JSON.stringify(response.dados.usrCandidato)
+        await AsyncStorage.setItem('auth.conCandidato', jsonCanId)
+        */
     }
 
     return(

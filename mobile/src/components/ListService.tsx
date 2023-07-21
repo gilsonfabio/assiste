@@ -25,13 +25,13 @@ const ListService = ({ data }:any) => {
   }
   
   const handleGetToken = async () => {
-    const token = await AsyncStorage.getItem('auth.token');
+    //const token = await AsyncStorage.getItem('auth.token');
     
-    if (!token) {
-        navigation.navigate('SignIn')
-    }else {
+    //if (!token) {
+    //    navigation.navigate('SignIn')
+    //}else {
         navigation.navigate(data.srvLink)
-    }        
+    //}        
   }
   
   return (

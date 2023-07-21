@@ -18,8 +18,8 @@ type Nav = {
 export default function Servicos(){
     const navigation = useNavigation<Nav>();
     const [services, setServices] = useState([]);
-    const [candidato, setCandidato] = useState([]);
-    const [contato, setContato] = useState([]);
+    const [candidato, setCandidato] = useState<string>();
+    const [contato, setContato] = useState<any>();
     const [dados, setDados] = useState([]);
       
     useEffect(() => {
@@ -35,32 +35,31 @@ export default function Servicos(){
             alert(`Falha no acesso dos serviços! Tente novamente.`);
         })
 
-        api({
-            method: 'get',    
-            url: `candidato`,                 
-        }).then(function(resp) {
-            setDados(resp.data)
-        }).catch(function(error) {
-            alert(`Falha no acesso do candidato! Tente novamente.`);
-        })
-    
+        if (candidato != null) {
+            console.log('Key:', candidato)
+            api({
+                method: 'get',    
+                url: `searchCandidato/${candidato}`,                 
+            }).then(function(resp) {
+                setDados(resp.data)
+            }).catch(function(error) {
+                alert(`Falha no acesso do candidato! Tente novamente.`);
+            })
+        }       
+                            
     }, []);
 
     const getData = async () => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
-            const jsonCont = await AsyncStorage.getItem('auth.conId');
-            if (jsonValue != null) { 
-                setCandidato(JSON.parse(jsonValue))
-                setContato(JSON.parse(jsonCont)) 
-            }else { alert('erro');
-            }
-        } catch (e) {
-          // error reading value
-        }
-        
+        const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
+        const jsonCont = await AsyncStorage.getItem('auth.conId');
+        if (jsonValue != null) { 
+            setCandidato(jsonValue)
+            setContato(jsonCont) 
+        }else { 
+            alert('erro');
+        }       
     };
-
+    
     return (
         <View className="flex-1 bg-[#16568A]">
             <View className='w-full h-2/3'>
@@ -75,7 +74,8 @@ export default function Servicos(){
                         <Text className='mb-8 ml-5 text-3xl text-white font-bold'>{row.canFrase}</Text>
                     </View>    
                 ))}
-            </View>               
+            </View>  
+            <Text>{candidato}</Text>             
             <FlatList
                 data={services}
                 className=''
