@@ -5,6 +5,7 @@ import {
   StyleSheet,
   View,
   Text,
+  FlatList,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 
 import api from '../Services/api';
+import ListAgenda from '../components/ListAgenda';
 
 type Nav = {
   navigate: (value: string) => void;
@@ -24,8 +26,8 @@ function Agenda() {
   const [agenda, setAgenda] = useState([]);
   const [authToken, setAuthToken] = useState('');
   const [atualiza, setAtualiza] = useState(0);
-  const [selected, setSelected] = useState('');
-
+  const [selected, setSelected] = useState(new Date().toString());
+  const [datAgenda, setDatAgenda] = useState('');
   const running = {key: 'running', color: 'blue'};
   const cycling = {key: 'cycling', color: 'green'};
   const walking = {key: 'walking', color: 'orange'};
@@ -40,30 +42,24 @@ function Agenda() {
 
   useEffect(() => {
     getData()
-    console.log(marked);
-    console.log('Candidato:',idCan);
-    console.log('Data Agenda:',datAtual);
       
   }, []);
 
   useEffect(() => {
 
     setDatAtual(new Date(selected));
-    let datAgenda = moment(datAtual).format('YYYY-MM-DD');
-
-    console.log(marked);
-    console.log('Candidato:',idCan);
-    console.log('Data Agenda:',datAgenda);
+    setDatAgenda(selected);
 
     if (idCan != null) {
       console.log('Key:', idCan)
+      getData()
       api({
           method: 'get',    
-          url: `agenda/${idCan}/:${datAgenda}`,                 
+          url: `agenda/${idCan}/${selected}`,                 
       }).then(function(resp) {
           setAgenda(resp.data)
       }).catch(function(error) {
-          alert(`Falha no acesso a agenda! Tente novamente.`);
+          alert(`Falha no acesso a agenda do candidato! Tente novamente.`);
       })
     }   
     
@@ -78,7 +74,8 @@ function Agenda() {
         setIdCan(jsonValue)
     }else { 
         alert('erro');
-    }       
+    } 
+     
   };
    
   async function handleRefreshToken(){
@@ -123,6 +120,13 @@ function Agenda() {
       <View>
         <Text>Data da consulta:{datAtual.toString()}</Text>
       </View>
+      <FlatList
+        data={agenda}
+        className=''
+        numColumns={1}
+        renderItem={({ item }) => <ListAgenda data={item} />}
+        keyExtractor={(item) => item.ageHorInicial}
+      />
     </SafeAreaView>
 
   );
