@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Dimensions, FlatList, ImageBackground, View, Text, TextInput, TouchableOpacity} from "react-native";
+import {Dimensions, FlatList, ImageBackground, View, Text, Image, TextInput, TouchableOpacity} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Animatable from 'react-native-animatable';
 import Carousel from 'react-native-reanimated-carousel';
-import { Feather } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
@@ -14,7 +14,7 @@ import LisDenHist from '../components/LisDenHist';
 type Nav = {
     navigate: (
       value: string,
-      denId: any
+      denId?: any
     ) => void;
 }
 
@@ -86,17 +86,30 @@ export default function HisDenuncia(){
         })
     }
 
+    function handleGoService(){
+        navigation.navigate("Denuncias");
+    }
+
     return (
         <View className="flex-1 bg-[#16568A]">
             <View className='w-full h-1/3'>
                 <ImageBackground className='w-full h-full opacity-50'
                     source={require('../../assets/services.png')}  
                 />
-            </View>    
-            <View className='flex absolute w-full items-center justify-center mt-20'>
-                <Text className='text-3xl font-bold text-white '>Histórico Denuncias</Text>
-                
-            </View>
+            </View>   
+            <View className='flex justify-between absolute w-full'>
+                <Image className='ml-2 mt-8 w-20 h-10 '
+                    source={require('../../assets/logo.png')}  
+                /> 
+                <View className='flex absolute w-full items-center justify-center mt-8'>
+                    <View className='flex flex-row justify-between w-full mr-4'>
+                        <Text className='ml-32 text-xl font-bold text-white '>Histórico Denuncias</Text>
+                        <TouchableOpacity onPress={handleGoService}>
+                            <AntDesign name="leftcircleo" size={24} color="white"/>
+                        </TouchableOpacity>
+                    </View>                    
+                </View>
+            </View> 
             <FlatList
                 data={historicos}
                 className=''

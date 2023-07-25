@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TouchableOpacity, View, Image, Text, Dimensions} from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment'; 
 
 type Nav = {
     navigate: (
@@ -43,14 +44,14 @@ const LisSolHist = ({ data }:any ) => {
   
   return (
     <TouchableOpacity onPress={() => {}}>
-      <View className=''>
-        <View className='flex flex-col justify-between items-center bg-sky-600 w-96 h-auto rounded mt-2 ml-1'>
+      <View className='flex flex-col items-center'>
+        <View className='flex flex-col justify-between items-center bg-sky-600 w-80 h-auto rounded mt-2 ml-1'>
           <View className='flex flex-row justify-between items-center w-full'>
-            <Text className='mt-1 ml-2 text-white text-md font-bold'>{data.hsoData}</Text>
+            <Text className='mt-1 ml-2 text-white text-md font-bold'>{moment(data.hsoData).utcOffset('-03:00').format('DD/MM/YYYY')}</Text>
             <Text className='mt-1 mr-2 text-white font-bold'>{data.hsoHora}</Text>            
           </View>
           <View className='flex flex-row justify-between items-center w-full'>
-            <Text className='mt-1 ml-2 text-white font-bold'>{data.hsoDescricao}</Text>
+            <Text className='mt-1 ml-2 mb-2 text-white font-bold'>{data.hsoDescricao}</Text>
           </View>  
         </View>             
       </View>  

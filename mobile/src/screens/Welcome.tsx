@@ -49,7 +49,7 @@ export default function SignIn(){
                 <TouchableOpacity onPress={() => navigation.navigate('SignIn')} className='flex justify-center items-center absolute ml-80 mt-12 w-14 h-14 bg-[#16568A] rounded-full'>
                     <Feather name="user-plus" size={26} color="black" />
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={() => navigation.navigate('SignIn')}className='flex justify-center items-center absolute ml-80 mt-28 w-14 h-14 bg-yellow-400 rounded-full'>
+                <TouchableOpacity onPress={() => navigation.navigate('Servicos')}className='flex justify-center items-center absolute ml-80 mt-28 w-14 h-14 bg-yellow-400 rounded-full'>
                     <Feather name="plus-circle" size={26} color="black" />
                 </TouchableOpacity>                 
                 <View className='absolute ml-1 mt-60 flex justify-center items-center w-96 h-64 bg-white rounded-xl opacity-50'>

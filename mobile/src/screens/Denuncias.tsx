@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Dimensions, FlatList, ImageBackground, View, Text, TextInput, TouchableOpacity} from "react-native";
+import {Dimensions, FlatList, ImageBackground, View, Text, Image, TextInput, TouchableOpacity} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Animatable from 'react-native-animatable';
 import Carousel from 'react-native-reanimated-carousel';
-import { Feather } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
@@ -78,6 +78,10 @@ export default function Denuncias(){
             navigation.navigate("SignIn");      
         })
     }
+    
+    function handleGoService(){
+        navigation.navigate("Servicos");
+    }
 
     return (
         <View className="flex-1 bg-[#16568A]">
@@ -85,20 +89,32 @@ export default function Denuncias(){
                 <ImageBackground className='w-full h-full opacity-50'
                     source={require('../../assets/services.png')}  
                 />
+            </View>   
+            <View className='flex justify-between absolute w-full'>
+                <Image className='ml-2 mt-8 w-20 h-10 '
+                    source={require('../../assets/logo.png')}  
+                /> 
+                <View className='flex absolute w-full items-center justify-center mt-8'>
+                    <View className='flex flex-row justify-between w-full mr-4'>
+                        <Text className='ml-32 text-2xl font-bold text-white '>Denuncias</Text>
+                        <TouchableOpacity onPress={handleGoService}>
+                            <AntDesign name="leftcircleo" size={24} color="white"/>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity onPress={handleNewDenuncia} className='flex justify-center items-center mt-10 mr-4 ml-4 p-3 bg-green-600 rounded-md '>
+                        <Text className='font-bold text-white'>NOVA DENUNCIA</Text>
+                    </TouchableOpacity>
+                </View>
+            </View> 
+            <View className='flex flex-col items-center' >   
+               <FlatList
+                    data={denuncias}
+                    className=''
+                    numColumns={1}
+                    renderItem={({ item }) => <ListDenuncia data={item} />}
+                    keyExtractor={(item) => item.denId}
+                />
             </View>    
-            <View className='flex absolute w-full items-center justify-center mt-20'>
-                <Text className='text-3xl font-bold text-white '>Denuncias</Text>
-                <TouchableOpacity onPress={handleNewDenuncia} className='flex justify-center items-center mt-6 mr-4 ml-4 p-3 bg-green-600 rounded-md '>
-                    <Text className='font-bold text-white'>NOVA DENUNCIA</Text>
-                </TouchableOpacity>
-            </View>
-            <FlatList
-                data={denuncias}
-                className=''
-                numColumns={1}
-                renderItem={({ item }) => <ListDenuncia data={item} />}
-                keyExtractor={(item) => item.denId}
-            />
         </View>
     )
 }

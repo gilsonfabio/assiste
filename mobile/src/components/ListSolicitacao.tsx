@@ -16,6 +16,7 @@ type solProps = {
     solData: string;
     solTitulo: string;
     solDescricao: string;
+    tipDescricao: string;
   }  
 }
 
@@ -32,18 +33,25 @@ const ListSolicitacao = ({ data }:solProps) => {
   }
 
   return (
-    <TouchableOpacity onPress={() => handleHisSolicitacoes({ data })}>
-      <View>
-        <View className='flex flex-col bg-sky-600 w-96 h-auto rounded mt-2 ml-1'>          
-          <View className='w-full h-auto '>             
-             <Text className='mt-2 ml-2 text-white font-bold '>{moment(data.solData).utcOffset('-03:00').format('DD/MM/YYYY HH:mm:ss')}</Text>
-          </View>  
-          <View>
-            <Text className='mt-2 ml-2 mb-2 text-white font-bold '>{data.solTitulo}</Text>            
+    <View>
+      <View className='flex flex-col bg-sky-900 w-80 h-auto rounded mt-2 ml-1 mb-2 '>
+        <View className='flex flex-row justify-between w-full h-auto'>          
+          <View className='' >             
+             <Text className='mt-2 ml-2 text-md text-white font-bold '>{data.tipDescricao}</Text>
+          </View>           
+          <View className='w-auto h-auto '>             
+             <Text className='mt-2 mr-2 text-md text-white font-bold '>{moment(data.solData).utcOffset('-03:00').format('DD/MM/YYYY HH:mm:ss')}</Text>
           </View>
-        </View>        
-      </View>  
-    </TouchableOpacity>
+        </View>    
+        <View>
+          <Text className='mt-2 ml-2 mb-2 text-xs text-white font-bold '>{data.solTitulo}</Text>            
+        </View>   
+        <TouchableOpacity onPress={() => handleHisSolicitacoes({ data })} className='flex justify-center items-center w-full mt-2 mr-4 p-3 bg-green-600 '>
+          <Text className='text-white uppercase'>Acompanhe sua solicitação</Text>
+        </TouchableOpacity>             
+      </View> 
+      
+    </View>  
   );
 };
 
