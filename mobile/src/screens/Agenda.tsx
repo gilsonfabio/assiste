@@ -1,19 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
+  TouchableOpacity,
   StyleSheet,
   View,
   Text,
   FlatList,
+  Image,
+  ImageBackground,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
+import { AntDesign } from '@expo/vector-icons';
 
 import api from '../Services/api';
 import ListAgenda from '../components/ListAgenda';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Nav = {
   navigate: (value: string) => void;
@@ -107,28 +111,48 @@ function Agenda() {
     })
   }
 
-  return (
-    <SafeAreaView className='flex-1 justify-center bg-[#16568A]'>
-      <Calendar
-        onDayPress={day => {
-          setSelected(day.dateString);
-        }}
-        initialDate="2023-07-21"
-        markingType="multi-dot"
-        markedDates={marked}
-      />
-      <View>
-        <Text>Data da consulta:{datAtual.toString()}</Text>
-      </View>
-      <FlatList
-        data={agenda}
-        className=''
-        numColumns={1}
-        renderItem={({ item }) => <ListAgenda data={item} />}
-        keyExtractor={(item) => item.ageHorInicial}
-      />
-    </SafeAreaView>
+  function handleGoService(){
+    navigation.navigate("Servicos");
+  }
 
+  return (
+    <View className='flex-1 bg-[#16568A]'>
+      <View className='w-full h-1/5'>
+        <ImageBackground className='w-full h-full opacity-50'
+          source={require('../../assets/services.png')}  
+        />
+      </View>   
+      <View className='flex justify-between absolute w-full'>
+        <Image className='ml-2 mt-8 w-20 h-10 '
+          source={require('../../assets/logo.png')}  
+        /> 
+        <View className='flex absolute w-full items-center justify-center mt-8'>
+          <View className='flex flex-row justify-between w-full mr-4'>
+            <Text className='ml-32 text-2xl font-bold text-white '>Agenda</Text>
+            <TouchableOpacity onPress={handleGoService}>
+              <AntDesign name="leftcircleo" size={24} color="white"/>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+      <View className='flex w-full h-auto'>   
+        <Calendar
+          onDayPress={day => {
+            setSelected(day.dateString);
+          }}
+          initialDate="2023-07-21"
+          markingType="multi-dot"
+          markedDates={marked}
+        />        
+        <FlatList
+          data={agenda}
+          className='w-full'
+          numColumns={1}
+          renderItem={({ item }) => <ListAgenda data={item} />}
+          keyExtractor={(item) => item.ageHorInicial}
+        />
+      </View>  
+    </View>
   );
 };
 

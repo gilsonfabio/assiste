@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Dimensions, Switch, View, Text, TextInput, TouchableOpacity} from "react-native";
+import {Dimensions, Image, View, Text, TextInput, TouchableOpacity} from "react-native";
 import * as Animatable from 'react-native-animatable';
 import Carousel from 'react-native-reanimated-carousel';
 import { Feather } from '@expo/vector-icons'; 
@@ -162,6 +162,11 @@ export default function NewDenuncia(){
             <TouchableOpacity className='flex justify-center items-center mt-6 mr-4 ml-4 p-3 bg-green-600 rounded-md '>
                 <Text onPress={handleCadastra} className='font-bold text-white'>ENVIAR DENUNCIA</Text>
             </TouchableOpacity> 
+            <View className='flex items-center justify-center w-full mt-10'>
+                <Image className='mt-8 w-40 h-20 '
+                    source={require('../../assets/logo.png')}  
+                /> 
+            </View>
         </View>
     )
 }

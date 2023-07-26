@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Dimensions, FlatList, ImageBackground, View, Text, TextInput, TouchableOpacity} from "react-native";
+import {Dimensions, FlatList, Image, ImageBackground, View, Text, TouchableOpacity} from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Animatable from 'react-native-animatable';
 import Carousel from 'react-native-reanimated-carousel';
-import { Feather } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
@@ -21,44 +21,39 @@ export default function NossoTrabalho(){
     const [solicitacoes, setSolicitacoes] = useState([]);
     const [authToken, setAuthToken] = useState('');
     const [atualiza, setAtualiza] = useState(0);
-    const [candidato, setCandidato] = useState([]);
+    const [candidato, setCandidato] = useState<string>('');
     const [candidatos, setCandidatos] = useState([]);
 
     useEffect(() => {
-        setTimeout(() => {
-            handleGetToken()
-        }, 2000)
-        
-        alert(`candidato: ${candidato}`)
-
-        api({
-            method: 'get',    
-            url: `searchCandidato/${candidato}`            
-        }).then(function(response) {
-            setCandidatos(response.data);
-        }).catch(function(error) {  
-            alert(`erro de acesso ${candidato}`)               
-        })
-
+        handleGetToken()
     }, []);
+
+    useEffect(() => {
+        if (atualiza > 0) {
+            if (candidato != null) {
+                console.log('Key:', candidato)
+                api({
+                    method: 'get',    
+                    url: `searchCandidato/${candidato}`,                 
+                }).then(function(resp) {
+                    setCandidatos(resp.data)
+                }).catch(function(error) {
+                    alert(`Falha no acesso do candidato! Tente novamente.`);
+                })
+            }       
+        }    
+    }, [atualiza]);
     
     const handleGetToken = async () => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
-            if (jsonValue != null) { 
-                setCandidato(JSON.parse(jsonValue))
-                
-            }else { alert('erro');
-            }
-        } catch (e) {
-          // error reading value
+        const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
+        if (jsonValue != null) { 
+            setCandidato(jsonValue)
+        }else { 
+            alert('erro');
         }
-    }
-
-    function handleNewSolicitacao(){
-        navigation.navigate("NewSolicitacao");
-    }
-
+        setAtualiza(atualiza + 1);       
+    };
+    
     async function handleRefreshToken(){
         const refreshToken = await AsyncStorage.getItem('auth.refreshToken');
         const idCon = await AsyncStorage.getItem('auth.conId');
@@ -88,20 +83,31 @@ export default function NossoTrabalho(){
         })
     }
 
+    function handleGoService(){
+        navigation.navigate("Servicos");
+    }
+
     return (
         <View className="flex-1 bg-[#16568A]">
             <View className='w-full h-1/3'>
                 <ImageBackground className='w-full h-full opacity-50'
                     source={require('../../assets/services.png')}  
                 />
-            </View>    
-            <View className='flex absolute w-full items-center justify-center mt-20'>
-                <Text className='text-3xl font-bold text-white '>Solicitações</Text>
-                <TouchableOpacity onPress={() => {}} className='flex justify-center items-center mt-6 mr-4 ml-4 p-3 bg-green-600 rounded-md '>
-                    <Text className='font-bold text-white'>NOSSO TRABALHO</Text>
-                </TouchableOpacity>
-            </View>
-            <View className=''>
+            </View>   
+            <View className='flex justify-between absolute w-full'>
+                <Image className='ml-2 mt-8 w-20 h-10 '
+                    source={require('../../assets/logo.png')}  
+                /> 
+                <View className='flex absolute w-full items-center justify-center mt-8'>
+                    <View className='flex flex-row justify-between w-full mr-4'>
+                        <Text className='ml-32 text-2xl font-bold text-white '>Agenda</Text>
+                        <TouchableOpacity onPress={handleGoService}>
+                            <AntDesign name="leftcircleo" size={24} color="white"/>
+                        </TouchableOpacity>
+                    </View>                    
+                </View>
+            </View> 
+            <View className='flex flex-col items-center' >  
             <FlatList
                 data={candidatos}
                 className=''

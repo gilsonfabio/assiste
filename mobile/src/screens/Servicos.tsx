@@ -75,14 +75,16 @@ export default function Servicos(){
                     </View>    
                 ))}
             </View>  
-            <Text>{candidato}</Text>             
-            <FlatList
-                data={services}
-                className=''
-                numColumns={3}
-                renderItem={({ item }) => <ListService data={item} />}
-                keyExtractor={(item) => item.srvId}
-            />
+            <Text>{candidato}</Text>   
+            <View className='flex items-center '>          
+                <FlatList
+                    data={services}
+                    className=''
+                    numColumns={3}
+                    renderItem={({ item }) => <ListService data={item} />}
+                    keyExtractor={(item) => item.srvId}
+                />
+            </View>
         </View>
     )
 }

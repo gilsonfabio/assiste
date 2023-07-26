@@ -15,6 +15,7 @@ type denProps = {
     denId: number;
     denData: string;
     denDescricao: string;
+    denNews: number;
     tdeDescricao: string;
     stdDescricao: string;
   }  
@@ -47,8 +48,11 @@ const ListDenuncia = ({ data }:denProps) => {
             <Text className='text-white font-bold mt-2 ml-2 mb-2'>{data.denDescricao}</Text>
           </View>
           <TouchableOpacity onPress={() => handleHisDenuncias({ data })} className='flex justify-center items-center w-full mt-2 mr-4 p-3 bg-green-600 '>
-            <Text className='text-white uppercase'>Acompanhe sua denuncia</Text>
-          </TouchableOpacity>  
+            <Text className='text-white uppercase'>Acompanhe sua denuncia</Text>            
+          </TouchableOpacity>
+          <View className={data.denNews === 0 ? 'hidden' : 'flex items-center justify-center bg-red-500 w-5 h-5 rounded-full absolute mt-40 ml-5'}>
+            <Text className='text-white font-bold'>{data.denNews}</Text>      
+          </View>            
         </View>        
     </View>  
   );

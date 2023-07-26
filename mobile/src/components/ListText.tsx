@@ -41,16 +41,16 @@ const ListText = ({ data }:any) => {
       <View key={data.canId}>
         <View className='flex flex-col items-center justify-center bg-sky-600 w-96 h-auto rounded ml-1 mt-2 '>
           <View>  
-            <Text className='mt-3 text-white '>{data.canText1}</Text>
+            <Text className='ml-2 mt-3 text-white '>{data.canText1}</Text>
           </View>
           <View>
-            <Text className='mt-3 text-white '>{data.canText2}</Text>
+            <Text className='ml-2 mt-3 text-white '>{data.canText2}</Text>
           </View>
           <View>  
-            <Text className='mt-3 text-white '>{data.canText3}</Text>
+            <Text className='ml-2 mt-3 text-white '>{data.canText3}</Text>
           </View>
           <View>  
-            <Text className='mt-3 text-white '>{data.canText4}</Text>
+            <Text className='ml-2 mt-3 text-white '>{data.canText4}</Text>
           </View>  
         </View>        
       </View>  
