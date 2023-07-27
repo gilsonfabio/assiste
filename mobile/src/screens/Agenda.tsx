@@ -135,23 +135,21 @@ function Agenda() {
           </View>
         </View>
       </View>
-      <View className='flex w-full h-auto'>   
-        <Calendar
-          onDayPress={day => {
-            setSelected(day.dateString);
-          }}
-          initialDate="2023-07-21"
-          markingType="multi-dot"
-          markedDates={marked}
-        />        
-        <FlatList
-          data={agenda}
-          className='w-full'
-          numColumns={1}
-          renderItem={({ item }) => <ListAgenda data={item} />}
-          keyExtractor={(item) => item.ageHorInicial}
-        />
-      </View>  
+      <Calendar
+        onDayPress={day => {
+          setSelected(day.dateString);
+        }}
+        initialDate="2023-07-21"
+        markingType="multi-dot"
+        markedDates={marked}
+      />        
+      <FlatList
+        data={agenda}
+        className='w-full'
+        numColumns={1}
+        renderItem={({ item }) => <ListAgenda data={item} />}
+        keyExtractor={(item) => item.ageHorInicial}
+      />
     </View>
   );
 };

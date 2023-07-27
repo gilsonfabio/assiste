@@ -19,7 +19,7 @@ type Nav = {
 export default function Cursos(){
     const navigation = useNavigation<Nav>();
     const [oportunidades, setOportunidades] = useState([]);
-    const [candidato, setCandidato] = useState([]);
+    const [candidato, setCandidato] = useState<string>('');
       
     const tipo = 1;
 
@@ -40,13 +40,13 @@ export default function Cursos(){
     }, []);
 
     const getData = async () => {
-        try {
-          const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
-          return jsonValue != null ? setCandidato(JSON.parse(jsonValue)) : alert('erro');
-        } catch (e) {
-          // error reading value
-        }
-        alert(candidato);
+        const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
+        const jsonCont = await AsyncStorage.getItem('auth.conId');
+        if (jsonValue != null) { 
+            setCandidato(jsonValue)
+        }else { 
+            alert(`erro no acesso: ${jsonValue}`);
+        }       
     };
 
     return (

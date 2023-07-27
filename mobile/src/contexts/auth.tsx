@@ -36,13 +36,12 @@ function AuthProvider({children}: any){
                   password
                 },       
             }).then(function(response) { 
-                console.log(response.data.dados) 
                 const { usrCandidado, usrEmail, usrId, usrNome } = response.data.dados;    
 
-                console.log(usrCandidado);
-                console.log(usrEmail);
-                console.log(usrId);
-                console.log(usrNome);    
+                //console.log(usrCandidado);
+                //console.log(usrEmail);
+                //console.log(usrId);
+                //console.log(usrNome);    
 
                 handleSetDados(usrId, usrCandidado)
 

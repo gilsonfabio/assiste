@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Dimensions, FlatList, ImageBackground, Image, View, Text, TextInput, TouchableOpacity} from "react-native";
+import {Dimensions, FlatList, ImageBackground, Image, View, Text, TextInput, TouchableOpacity, ScrollView} from "react-native";
 import * as Animatable from 'react-native-animatable';
 import Carousel from 'react-native-reanimated-carousel';
 import { Feather } from '@expo/vector-icons'; 
@@ -18,7 +18,7 @@ type Nav = {
 export default function Servicos(){
     const navigation = useNavigation<Nav>();
     const [services, setServices] = useState([]);
-    const [candidato, setCandidato] = useState<string>();
+    const [candidato, setCandidato] = useState<string>(null);
     const [contato, setContato] = useState<any>();
     const [dados, setDados] = useState([]);
       
@@ -34,9 +34,13 @@ export default function Servicos(){
         }).catch(function(error) {
             alert(`Falha no acesso dos serviços! Tente novamente.`);
         })
+                          
+    }, []);
+
+    useEffect(() => {
 
         if (candidato != null) {
-            console.log('Key:', candidato)
+            //console.log('Key:', candidato)
             api({
                 method: 'get',    
                 url: `searchCandidato/${candidato}`,                 
@@ -47,7 +51,7 @@ export default function Servicos(){
             })
         }       
                             
-    }, []);
+    }, [candidato]);
 
     const getData = async () => {
         const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
@@ -56,7 +60,7 @@ export default function Servicos(){
             setCandidato(jsonValue)
             setContato(jsonCont) 
         }else { 
-            alert('erro');
+            alert(`erro no acesso: ${jsonValue}`);
         }       
     };
     
@@ -75,16 +79,13 @@ export default function Servicos(){
                     </View>    
                 ))}
             </View>  
-            <Text>{candidato}</Text>   
-            <View className='flex items-center '>          
-                <FlatList
-                    data={services}
-                    className=''
-                    numColumns={3}
-                    renderItem={({ item }) => <ListService data={item} />}
-                    keyExtractor={(item) => item.srvId}
-                />
-            </View>
+            <FlatList
+                data={services}
+                className='ml-5'
+                numColumns={3}
+                renderItem={({ item }) => <ListService data={item} />}
+                keyExtractor={(item) => item.srvId}
+            />
         </View>
     )
 }

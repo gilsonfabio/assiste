@@ -100,7 +100,7 @@ export default function NossoTrabalho(){
                 /> 
                 <View className='flex absolute w-full items-center justify-center mt-8'>
                     <View className='flex flex-row justify-between w-full mr-4'>
-                        <Text className='ml-32 text-2xl font-bold text-white '>Agenda</Text>
+                        <Text className='ml-32 text-2xl font-bold text-white '>Nosso Trabalho</Text>
                         <TouchableOpacity onPress={handleGoService}>
                             <AntDesign name="leftcircleo" size={24} color="white"/>
                         </TouchableOpacity>

@@ -18,7 +18,9 @@ import Previsao from '../screens/Previsao';
 import HisDenuncia from '../screens/HisDenuncia';
 import HisSolicitacao from '../screens/HisSolicitacao';
 import Agenda from '../screens/Agenda';
-
+import Memory from '../screens/Memory';
+import News from '../screens/News';
+  
 type navigationProps = {
     Welcome: undefined;
     NewUser: undefined;
@@ -38,6 +40,8 @@ type navigationProps = {
     HisDenuncia: {denId: number | undefined}
     HisSolicitacao: {solId: number | undefined}
     Agenda: undefined;
+    Memory: undefined;
+    News: undefined;
 }
 
 const Stack = createNativeStackNavigator<navigationProps>();
@@ -63,6 +67,8 @@ export default function Routes(){
             <Stack.Screen name="HisDenuncia" component={HisDenuncia} options={{headerShown:false}}/>
             <Stack.Screen name="HisSolicitacao" component={HisSolicitacao} options={{headerShown:false}}/>
             <Stack.Screen name="Agenda" component={Agenda} options={{headerShown:false}}/>
+            <Stack.Screen name="Memory" component={Memory} options={{headerShown:false}}/>
+            <Stack.Screen name="News" component={News} options={{headerShown:false}}/>
         </Stack.Navigator>
     )
 }

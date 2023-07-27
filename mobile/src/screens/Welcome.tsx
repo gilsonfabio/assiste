@@ -14,11 +14,19 @@ type Nav = {
     navigate: (value: string) => void;
 }
 
+type NewsProps = {
+    newId: number;
+    newDescricao: string;
+    newData: string;
+    newAutor: string;
+    newLink: string;
+}
+
 export default function SignIn(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { signIn }: any = useContext(AuthContext);
-    const [news, setNews] = useState([]);
+    const [news, setNews] = useState<Array<NewsProps>>([]);
 
     const navigation = useNavigation<Nav>();
     
@@ -49,7 +57,7 @@ export default function SignIn(){
                 <TouchableOpacity onPress={() => navigation.navigate('SignIn')} className='flex justify-center items-center absolute ml-80 mt-12 w-14 h-14 bg-[#16568A] rounded-full'>
                     <Feather name="user-plus" size={26} color="black" />
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={() => navigation.navigate('Servicos')}className='flex justify-center items-center absolute ml-80 mt-28 w-14 h-14 bg-yellow-400 rounded-full'>
+                <TouchableOpacity onPress={() => navigation.navigate('Servicos')} className='flex justify-center items-center absolute ml-80 mt-28 w-14 h-14 bg-yellow-400 rounded-full'>
                     <Feather name="plus-circle" size={26} color="black" />
                 </TouchableOpacity>                 
                 <View className='absolute ml-1 mt-60 flex justify-center items-center w-96 h-64 bg-white rounded-xl opacity-50'>
@@ -59,13 +67,15 @@ export default function SignIn(){
                         height={width / 2}
                         autoPlay={true}
                         data={news}
-                        scrollAnimationDuration={1000}
+                        scrollAnimationDuration={5000}
                         renderItem={({ index }) => (
-                        <View className='w-full h-full flex items-center justify-center'>
-                            <Text className='text-4xl font-bold text-black'>
-                                {index}
-                            </Text>
-                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('News')}>    
+                            <View className='w-full h-full flex items-center '>
+                                <Text className='text-3xl font-bold text-black'>
+                                    {news[index].newDescricao}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>    
                         )}
                     />
                 </View>              
