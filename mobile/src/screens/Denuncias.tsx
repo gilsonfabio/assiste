@@ -20,38 +20,56 @@ export default function Denuncias(){
     const [denuncias, setDenuncias] = useState([]);
     const [authToken, setAuthToken] = useState('');
     const [atualiza, setAtualiza] = useState(0);
-    const idCon = 1;
+    const [idCon, setIdCon] = useState('');
+    const [authRefreshToken, setAuthRefreshToken] = useState('');
+    const [candidato, setCandidato] = useState('');
 
     useEffect(() => {
-        setTimeout(() => {
-            handleGetToken()
-        }, 1000)
+        handleGetToken()
          
-        api({
-            method: 'get',    
-            url: `denContato/${idCon}`,
-            headers: {
-                "x-access-token" : authToken    
-            },      
-        }).then(function(response) {
-            setDenuncias(response.data);
-        }).catch(function(error) {  
-            handleRefreshToken()                 
-        })
-
     }, [atualiza]);
+
+    useEffect(() => {
+        
+        //console.log('Id do Contato:',idCon);
+
+        if (idCon !== '') {
+            api({
+                method: 'get',    
+                url: `denContato/${idCon}`,
+                headers: {
+                    "x-access-token" : authToken    
+                },      
+            }).then(function(response) {
+                setDenuncias(response.data);
+            }).catch(function(error) {  
+                handleRefreshToken()                 
+            })
+        }    
+
+    }, [idCon]);
     
     const handleGetToken = async () => {
+        const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
+        const jsonCont = await AsyncStorage.getItem('auth.conId');
         const token = await AsyncStorage.getItem('auth.token');
-        setAuthToken(token);
-    }
+        const refreshtoken = await AsyncStorage.getItem('auth.refreshToken');
+        if (jsonValue != null) { 
+            setCandidato(jsonValue)
+            setIdCon(jsonCont) 
+            setAuthToken(token)
+            setAuthRefreshToken(refreshtoken);
+        }else { 
+            alert(`erro no acesso: ${jsonValue}`);
+        }       
+    };
 
     function handleNewDenuncia(){
         navigation.navigate("NewDenuncia");
     }
 
     async function handleRefreshToken(){
-        const refreshToken = await AsyncStorage.getItem('auth.refreshToken');
+    /*    const refreshToken = await AsyncStorage.getItem('auth.refreshToken');
         const idCon = await AsyncStorage.getItem('auth.conId');
         await api({
             method: 'post',    
@@ -74,9 +92,10 @@ export default function Denuncias(){
             AsyncStorage.setItem('auth.conCandidato', jsonCanId)
             setAtualiza(atualiza + 1 )
         }).catch(function(error) {
+    */
             alert(`Falha no acesso as denuncias! Tente novamente.`);
             navigation.navigate("SignIn");      
-        })
+    //    })
     }
     
     function handleGoService(){

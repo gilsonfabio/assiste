@@ -37,13 +37,14 @@ function AuthProvider({children}: any){
                 },       
             }).then(function(response) { 
                 const { usrCandidado, usrEmail, usrId, usrNome } = response.data.dados;    
-
+                const token = response.data.token;
+                const refreshToken = response.data.refreshToken;
                 //console.log(usrCandidado);
                 //console.log(usrEmail);
                 //console.log(usrId);
                 //console.log(usrNome);    
 
-                handleSetDados(usrId, usrCandidado)
+                handleSetDados(usrId, usrNome, usrCandidado, token, refreshToken)
 
                 navigation.navigate("Servicos")           
 
@@ -54,10 +55,13 @@ function AuthProvider({children}: any){
         } 
     }
 
-    const handleSetDados = async (usrId, usrCandidato) => {
+    const handleSetDados = async (usrId, usrNome, usrCandidato, token, refreshToken) => {
         if (usrId != null && usrCandidato != null) { 
             await AsyncStorage.setItem('auth.conId', JSON.stringify(usrId))
+            await AsyncStorage.setItem('auth.conNomCompleto', usrNome)
             await AsyncStorage.setItem('auth.conCandidato', usrCandidato)
+            await AsyncStorage.setItem('auth.token', token)
+            await AsyncStorage.setItem('auth.refreshToken', refreshToken)
         }    
         /*
         await AsyncStorage.setItem('auth.token', response.token)

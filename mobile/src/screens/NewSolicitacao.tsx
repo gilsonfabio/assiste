@@ -58,25 +58,47 @@ export default function NewSolicitacao(){
 
     const width = Dimensions.get('window').width;
 
-    async function handleCadastra(){              
-        try {
-            api.post('newSolicitacao', {
-                solIdServ: idServ, 
-                solTipo: tipo, 
-                solContato: contato, 
-                solTitulo: titulo, 
-                solDescricao: texto, 
-                solCandidato: candidato, 
-                solEspecializacao: especializacao
-            }).then(() => {
-                alert('Solicitação cadastrada com sucesso!')
-            }).catch(() => {
-                alert('Erro no cadastro!');
-            })  
-            navigation.navigate('Servicos');
-        }catch (err) {
-            alert('Falha no Cadastro de Solicitação!');
-        }  
+    async function handleCadastra(){   
+        let erro = 0;
+        
+        if (tipo == '') {
+            erro = 1 
+            alert('Tipo de Solicitação não pode ser nulo!')
+        
+        }           
+        if (especializacao == '') {
+            erro = 1 
+            alert('Especialização da Solicitação não pode ser nulo!')
+        }
+        if (titulo == '') {
+            erro = 1 
+            alert('Titulo da Solicitação não pode ser nulo!')
+        }
+        if (texto == '') {
+            erro = 1 
+            alert('Descricao da Solicitação não pode ficar em branco!')
+        }
+
+        if (erro === 0) {
+            try {
+                api.post('newSolicitacao', {
+                    solIdServ: idServ, 
+                    solTipo: tipo, 
+                    solContato: contato, 
+                    solTitulo: titulo, 
+                    solDescricao: texto, 
+                    solCandidato: candidato, 
+                    solEspecializacao: especializacao
+                }).then(() => {
+                    alert('Solicitação cadastrada com sucesso!')
+                }).catch(() => {
+                    alert('Erro no cadastro!');
+                })  
+                navigation.navigate('Servicos');
+            }catch (err) {
+                alert('Falha no Cadastro de Solicitação!');
+            }  
+        }
     }
 
     useEffect(() => {

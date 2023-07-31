@@ -39,7 +39,7 @@ export default function NewDenuncia(){
     const [candidato, setCandidato] = useState([]);
     const [contato, setContato] = useState([]);
 
-    const idServ = 2;
+    const idServ = 1;
     const idCon = 1;
     const idCan = 1;
 

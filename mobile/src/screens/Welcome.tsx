@@ -6,7 +6,6 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
-
 import api from '../Services/api';
 import { AuthContext } from '../contexts/auth';
 
@@ -29,20 +28,16 @@ export default function SignIn(){
     const [news, setNews] = useState<Array<NewsProps>>([]);
 
     const navigation = useNavigation<Nav>();
-    
     const width = Dimensions.get('window').width;
 
     async function handleSignIn(){
-        signIn(email, password)
-  
+        signIn(email, password)  
     }  
     
-    useEffect(() => {
-        
+    useEffect(() => {        
         api.get(`news`).then(response => { 
             setNews(response.data);
-        })
-    
+        })    
     }, []);
     
     return (
@@ -71,7 +66,7 @@ export default function SignIn(){
                         renderItem={({ index }) => (
                         <TouchableOpacity onPress={() => navigation.navigate('News')}>    
                             <View className='w-full h-full flex items-center '>
-                                <Text className='text-3xl font-bold text-black'>
+                                <Text className='text-2xl font-bold text-black'>
                                     {news[index].newDescricao}
                                 </Text>
                             </View>

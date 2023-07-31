@@ -19,32 +19,50 @@ export default function Solicitacoes(){
     const navigation = useNavigation<Nav>();
     const [solicitacoes, setSolicitacoes] = useState([]);
     const [authToken, setAuthToken] = useState('');
+    const [authRefreshToken, setAuthRefreshToken] = useState('');
     const [atualiza, setAtualiza] = useState(0);
-    const idCon = 1;
+    const [idCon, setIdCon] = useState('');
+    const [candidato, setCandidato] = useState('');
 
     useEffect(() => {
-        setTimeout(() => {
-            handleGetToken()
-        }, 1000)
-         
-        api({
-            method: 'get',    
-            url: `solContato/${idCon}`,
-            headers: {
-                "x-access-token" : authToken    
-            },      
-        }).then(function(response) {
-            setSolicitacoes(response.data);
-        }).catch(function(error) {  
-            handleRefreshToken()                 
-        })
+        handleGetToken()
+        
+    }, []);
 
-    }, [atualiza]);
-    
+    useEffect(() => {
+        
+        //console.log('Id do Contato:',idCon);
+
+        if (idCon !== '' ) {
+            api({
+                method: 'get',    
+                url: `solContato/${idCon}`,
+                headers: {
+                    "x-access-token" : authToken    
+                },      
+            }).then(function(response) {
+                setSolicitacoes(response.data);
+            }).catch(function(error) {  
+                handleRefreshToken()                 
+            })
+        }
+
+    }, [idCon]);
+ 
     const handleGetToken = async () => {
+        const jsonValue = await AsyncStorage.getItem('auth.conCandidato');
+        const jsonCont = await AsyncStorage.getItem('auth.conId');
         const token = await AsyncStorage.getItem('auth.token');
-        setAuthToken(token);
-    }
+        const refreshtoken = await AsyncStorage.getItem('auth.refreshToken');
+        if (jsonValue != null) { 
+            setCandidato(jsonValue)
+            setIdCon(jsonCont) 
+            setAuthToken(token)
+            setAuthRefreshToken(refreshtoken);
+        }else { 
+            alert(`erro no acesso: ${jsonValue}`);
+        }       
+    };
 
     function handleNewSolicitacao(){
         navigation.navigate("NewSolicitacao");
@@ -55,6 +73,7 @@ export default function Solicitacoes(){
     }
 
     async function handleRefreshToken(){
+        /*
         const refreshToken = await AsyncStorage.getItem('auth.refreshToken');
         const idCon = await AsyncStorage.getItem('auth.conId');
         await api({
@@ -78,9 +97,12 @@ export default function Solicitacoes(){
             AsyncStorage.setItem('auth.conCandidato', jsonCanId)
             setAtualiza(atualiza + 1 )
         }).catch(function(error) {
-            alert(`Falha no acesso as solicitações! Tente novamente.`);
-            navigation.navigate("SignIn");      
-        })
+        */
+
+            alert(`Falha no acesso as solicitações! Tente novamente.${idCon}`);
+            navigation.navigate("SignIn");
+
+        //})
     }
 
     return (
